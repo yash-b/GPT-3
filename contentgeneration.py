@@ -8,11 +8,15 @@ openai.api_key = secrets.API_KEY
 def generate_content(prompt, tokens):
     try:
         response = openai.Completion.create(engine="text-davinci-001", prompt=prompt, max_tokens=tokens)
+        generated_text = response["choices"][0]["text"]
+        tokens_used = response["usage"]["total_tokens"]
     
-    except APIConnectionError:
+    except:
         response["choices"][0]["text"] = "Max retries! Try again in an hour!"
+        generated_text = "API Connection error!"
+        tokens_used = 0
     
-    return response["choices"][0]["text"]
+    return generated_text, tokens_used
 
 
 def get_tokens_from_characters(chars):
@@ -21,23 +25,23 @@ def get_tokens_from_characters(chars):
     
     return total_words
     
-def get_cost(ai_content, model):
+def get_cost(tokens_used, model):
     model_price = {
         "ada": 0.0004,
         "babbage": 0.0005,
         "curie": 0.0020,
         "davinci": 0.0200
     }
-    num_words = len(ai_content.split())
-    
-    return (model_price[model] / 75) * num_words, num_words
+    cost = (model_price[model] * tokens_used) / 1000
+   
+    return cost
 
 
 if __name__ == "__main__":
     prompt = input("Prompt: ")
     model = "davinci"
     chars = 140
-    # tokens = get_tokens_from_characters(chars)
-    ai_content = generate_content(prompt, 40)
-    cost, num_words = get_cost(ai_content, model)
-    print(f'\nContent: {ai_content}\n=========\n\nCost: ${round(cost,5)}\n=========\n\nTotal words: {num_words}')
+    # tokens_to_use = get_tokens_from_characters(chars)
+    ai_content, tokens_used = generate_content(prompt, 40)
+    cost = get_cost(tokens_used, model)
+    print(f'Content: {ai_content}\nCost: \n\n${round(cost,6)}\nCharacters used: \n\n{len(ai_content)}')
