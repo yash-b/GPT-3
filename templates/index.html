@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AI Content generation</title>
+    <title>AI content generation for Trumpia</title>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
@@ -99,33 +99,38 @@
   </head>
   <body>
     <div class="testbox">
-      <form action="/">
-        <h1>AI Content generation</h1>
-        <p>Please specify what content needs to be generated. Be as specific as possible; specify if content is for SMS, MMS, or Email.</p>
+      <form action="{{ url_for('app_blueprint.get_input')}}" method="post">
+        <h1>Trumpia's Artifical Intelligence content generation</h1>
+        <p>Please specify what content needs to be generated. Be as specific as possible</p>
         <hr />
         <table>
           <tr>
             <th class="first-col"></th>
-            <th>SMS</th>
-            <th>MMS</th>
-            <th>Email</th>
+            <th>Option 1</th>
+            <th>Option 2</th>
+            <th>Option 3</th>
           </tr>
           <tr>
-            <td class="first-col">What are you using the content creation for?</td>
-            <td><input type="radio" value="none" name="recommend" /></td>
-            <td><input type="radio" value="none" name="recommend" /></td>
-            <td><input type="radio" value="none" name="recommend" /></td>
+            <td class="first-col">Are you using the AI content for: <strong>SMS, MMS, Email</strong></td>
+            <td><input type="radio" value="sms" name="content-for" /></td>
+            <td><input type="radio" value="mms" name="content-for" /></td>
+            <td><input type="radio" value="email" name="content-for" /></td>
+          </tr>
+          <tr>
+            <td class="first-col">Tone you want the AI content to have: <strong>Formal, Informal, Funny</strong></td>
+            <td><input type="radio" value="formal" name="content-tone" /></td>
+            <td><input type="radio" value="informal" name="content-tone" /></td>
+            <td><input type="radio" value="funny" name="content-tone" /></td>
           </tr>
         </table>
-        <h4>What should we change in order to live up to your expectations?</h4>
-        <textarea rows="5"></textarea>
-        <h4>Email</h4>
-        <small>Only if you want to hear more from us.</small>
-        <input class="email" type="text" name="name" />
+        <h4>Please describe what kind of content you want generated. (Example: Write me an advertisement promoting a coffee shop)</h4>
+        <textarea rows="5" name="content-text"></textarea>
         <div class="btn-block">
-          <button type="submit" href="/">Send Feedback</button>
+          <button type="submit" href="/">Generate Content</button>
         </div>
       </form>
     </div>
+    <hr />
+    <textarea rows="5" name="ai-content-output" placeholder="TEST"></textarea>
   </body>
 </html>

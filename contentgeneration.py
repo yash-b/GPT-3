@@ -1,8 +1,8 @@
 import openai
-import secrets
+import constants
 
 
-openai.api_key = secrets.API_KEY
+openai.api_key = constants.API_KEY
 
 
 def generate_content(prompt, tokens):
