@@ -12,7 +12,6 @@ def index():
 def get_input():
     check = False
     if request.method == 'POST':
-        print(request.form)
         input_prompt = request.form['content-text']
         input_tone = request.form['content-tone']
         input_for = request.form['content-for']
@@ -30,9 +29,11 @@ def get_input():
             tokens = 600
 
         generated_text, tokens_used = generate_content(prompt=prompt, tokens=tokens)
+        generated_text = generated_text.strip()
         cost = get_cost(tokens_used=tokens_used, model="davinci")
         check = True
-        # print(f'Text: {generated_text}\n\nTokens:\n{tokens_used}')
+        print('Touched OpenAI')
+        print(f'Text: {generated_text}\n\nTokens:\n{tokens_used}')
         
     
-    return render_template("index.html", check=check, ai_text=generated_text, cost=cost)
+    return render_template("index.html", check=check, generated_text=generated_text, cost=cost)

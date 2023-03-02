@@ -23,12 +23,20 @@
       h4 {
       margin: 15px 0 4px;
       }
-      .testbox {
+      .inputbox {
       display: flex;
       justify-content: center;
       align-items: center;
       height: inherit;
       padding: 3px;
+      }
+      .outputbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 3px;
+      margin-top: 20px;
       }
       form {
       width: 100%;
@@ -98,10 +106,11 @@
     </style>
   </head>
   <body>
-    <div class="testbox">
+    <div class="inputbox">
       <form action="{{ url_for('app_blueprint.get_input')}}" method="post">
-        <h1>Trumpia's Artifical Intelligence content generation</h1>
-        <p>Please specify what content needs to be generated. Be as specific as possible</p>
+        <img src="https://rs.trumpia.com/images/common/main_logo.svg" class="logo" />
+        <h3>Artifical Intelligence content generation (Early look)</h1>
+        <p>Please specify what content needs to be generated. Be as specific as possible.</p>
         <hr />
         <table>
           <tr>
@@ -123,14 +132,16 @@
             <td><input type="radio" value="funny" name="content-tone" /></td>
           </tr>
         </table>
-        <h4>Please describe what kind of content you want generated. (Example: Write me an advertisement promoting a coffee shop)</h4>
-        <textarea rows="5" name="content-text"></textarea>
+        <h4><strong>Please describe what kind of content you want generated.</strong> (Example: Write me an advertisement promoting a coffee shop)</h4>
+        <textarea rows="5" name="content-text" placeholder="Prompt to generate content goes here..."></textarea>
         <div class="btn-block">
           <button type="submit" href="/">Generate Content</button>
         </div>
+        <div class="outputbox">
+          <textarea rows="7" name="ai-content-output" placeholder="Generated content will display here...">{{ generated_text }}</textarea>
+        </div>
       </form>
-    </div>
-    <hr />
-    <textarea rows="5" name="ai-content-output" placeholder="TEST"></textarea>
+    </div> 
+
   </body>
 </html>
